@@ -92,6 +92,3 @@ UserSchema.statics.createDefaultAdmin = async function (): Promise<void> {
 
 // * Crear el modelo
 export const User = model<IUser, IUserModel>("users", UserSchema);
-// * Crear el usuario ADMIN por defecto
-
-User.createDefaultAdmin();

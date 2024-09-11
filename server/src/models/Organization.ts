@@ -4,12 +4,12 @@ import { formatDate } from "../helpers/formatDates"
 export interface IOrganization extends Document {
     name: string,
     location: string,
-    headMaster: ObjectId,
+    manager: ObjectId,
     delegate: ObjectId,
     devices: ObjectId[],
     // !opcionales
     createdAt?: string,
-     updatedAt?: string
+    updatedAt?: string
 }
 
 const OrganizationSchema = new Schema({
@@ -21,7 +21,7 @@ const OrganizationSchema = new Schema({
         ref: 'devices',
         required: true
     }],
-    headMaster: {
+    manager: {
         type: Schema.Types.ObjectId,
         ref: 'users',
         required: true

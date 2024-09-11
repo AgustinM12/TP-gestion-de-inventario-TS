@@ -16,7 +16,6 @@ export interface IRoleModel extends Model<IRole> {
 
 // * Verificar si ya existe un usuario ADMIN
 RoleSchema.statics.createDefaultRoles = async function (): Promise<void> {
-    console.log("Se ejecuto");
     
     const Role = this;
 
@@ -29,7 +28,7 @@ RoleSchema.statics.createDefaultRoles = async function (): Promise<void> {
         const defaultRoles = [
             { name: "ADMIN" },
             { name: "DELEGATE" },
-            { name: "HEADMASTER" },
+            { name: "MANAGER" },
             { name: "MAINTENANCE" }
         ];
 
@@ -45,4 +44,3 @@ RoleSchema.statics.createDefaultRoles = async function (): Promise<void> {
 // * Crear documento de los roles por defecto
 export const Role = model<IRole, IRoleModel>("roles", RoleSchema)
 
-Role.createDefaultRoles();
