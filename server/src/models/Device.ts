@@ -5,8 +5,8 @@ export interface IOrganization extends Document {
     name: string,
     details: string[],
     tradeMark: string,
-    type: string,
     reparationCost: number,
+    type: ObjectId,
     state: ObjectId,
     technician: ObjectId,
     organization: ObjectId,
@@ -18,7 +18,14 @@ export interface IOrganization extends Document {
 const OrganizationSchema = new Schema({
 
     name: { type: String, required: true },
-    location: { type: String, required: true },
+    details: { type: [String], require: true },
+    tradeMark: { type: String, required: true },
+    reparationCost: { type: Number, required: true },
+    type: {
+        type: Schema.Types.ObjectId,
+        ref: 'deviceTypes',
+        required: true
+    },
     devices: [{
         type: Schema.Types.ObjectId,
         ref: 'devices',

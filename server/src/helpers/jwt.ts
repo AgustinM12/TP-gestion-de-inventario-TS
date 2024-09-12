@@ -2,13 +2,12 @@ import jwt from "jsonwebtoken"
 import { SECRET } from "../config/config"
 import { IUser } from "../models/User"
 import { Request, Response, NextFunction } from "express"
-import { ObjectId } from "mongoose"
 
 interface IToken {
     id: unknown,
     name: string,
     email: string,
-    role: ObjectId,
+    role: number,
 
 }
 

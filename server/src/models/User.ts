@@ -1,13 +1,13 @@
-import { model, Schema, Document, Model, ObjectId } from "mongoose";
+import { model, Schema, Document, Model } from "mongoose";
 import { formatDate } from "../helpers/formatDates"
 import { encryptPassword } from "../helpers/bcrypt"
-import { Role } from "./Role";
+import { RoleEnum, Role } from "./Role";
 
 export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
-    role: ObjectId;
+    role: RoleEnum;
     // !opcionales
     createdAt?: string;
     updatedAt?: string;
@@ -22,11 +22,7 @@ const UserSchema = new Schema<IUser>({
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    role: {
-        type: Schema.Types.ObjectId,
-        ref: 'roles',
-        required: true
-    }
+    role: { type: Number, ref: "roles", required: true, enum: RoleEnum }
 }, {
     timestamps: true,
     toJSON: { getters: true },  // Habilitar getters al convertir a JSON

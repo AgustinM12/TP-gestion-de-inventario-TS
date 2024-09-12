@@ -7,6 +7,7 @@ import { dbConnection } from "../db/db"
 import { Role } from "../models/Role"
 import { User } from "../models/User"
 import { DeviceState } from "../models/DeviceState"
+import { DeviceType } from "../models/DeviceType"
 
 export class Server {
     private app: Application;
@@ -27,6 +28,7 @@ export class Server {
         await Role.createDefaultRoles()
         await User.createDefaultAdmin()
         await DeviceState.createDefaultRoles();
+        await DeviceType.createDefaultTypes()
     }
 
     middlewares() {
