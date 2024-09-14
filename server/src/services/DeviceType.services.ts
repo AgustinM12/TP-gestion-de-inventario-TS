@@ -1,9 +1,9 @@
 import { IDeviceType, DeviceType } from "../models/DeviceType"
-import { deviceTypeDB } from "../types/types"
+import { deviceTypesDB } from "../types/types"
 
 export class DeviceTypeServices {
 
-    public async findAll(): Promise<deviceTypeDB | boolean> {
+    public async findAll(): Promise<deviceTypesDB | boolean> {
         try {
 
             const deviceTypes: IDeviceType[] = await DeviceType.find()

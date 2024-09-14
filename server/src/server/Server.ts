@@ -8,6 +8,7 @@ import { Role } from "../models/Role"
 import { User } from "../models/User"
 import { DeviceState } from "../models/DeviceState"
 import { DeviceType } from "../models/DeviceType"
+import userRouter from "../routes/User.routes"
 
 export class Server {
     private app: Application;
@@ -38,7 +39,7 @@ export class Server {
     }
 
     routes(): void {
-
+        this.app.use("/api", userRouter)
     }
 
     listen(): void {

@@ -1,7 +1,7 @@
 import { model, Schema, Document, ObjectId } from "mongoose"
 import { formatDate } from "../helpers/formatDates"
 
-export interface IOrganization extends Document {
+export interface IDevice extends Document {
     name: string,
     details: string[],
     tradeMark: string,
@@ -15,7 +15,7 @@ export interface IOrganization extends Document {
     updatedAt?: string
 }
 
-const OrganizationSchema = new Schema({
+const DeviceSchema = new Schema({
 
     name: { type: String, required: true },
     details: { type: [String], require: true },
@@ -49,12 +49,12 @@ const OrganizationSchema = new Schema({
 })
 
 // Aplicar los getters para formatear los timestamps
-OrganizationSchema.path("createdAt").get(function (value: Date) {
+DeviceSchema.path("createdAt").get(function (value: Date) {
     return formatDate(value)
 })
 
-OrganizationSchema.path("updatedAt").get(function (value: Date) {
+DeviceSchema.path("updatedAt").get(function (value: Date) {
     return formatDate(value)
 })
 
-export const Organization = model<IOrganization>("organizations", OrganizationSchema)
+export const Device = model<IDevice>("organizations", DeviceSchema)

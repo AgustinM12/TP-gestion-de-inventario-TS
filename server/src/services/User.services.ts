@@ -1,18 +1,17 @@
 import { User, IUser } from "../models/User";
 import { usersDB } from "../types/types"
-import { verifyPassword } from "../helpers/bcrypt"
-import { JsonWebToken } from "../helpers/jwt"
 
 export class UserService {
 
-    public async find(): Promise<boolean | IUser[]> {
+    public async findAll(): Promise<usersDB> {
         try {
-            const users: IUser[] = await User.find()
+            const users: usersDB = await User.find()
 
             if (users.length > 0) {
                 return users
             } else {
-                return false
+                throw new Error("No existen usuarios");
+
             }
 
         } catch (error) {
@@ -24,14 +23,14 @@ export class UserService {
         }
     }
 
-    public async findById(idUser: string): Promise<boolean | IUser> {
+    public async findById(idUser: string): Promise<IUser> {
         try {
             const users: IUser | null = await User.findById(idUser)
 
             if (users !== null) {
                 return users
             } else {
-                return false
+                throw new Error("No existe el usuario");
             }
 
         } catch (error) {
@@ -43,7 +42,7 @@ export class UserService {
         }
     }
 
-    public async findByRole(idRole: number): Promise<boolean | IUser[]> {
+    public async findByRole(idRole: number): Promise<IUser[]> {
         try {
             // ! AGREGAR EL ID REAL DEL ROL
             const usersByRole: IUser[] = await User.find({ role: idRole })
@@ -51,7 +50,7 @@ export class UserService {
             if (usersByRole.length > 0) {
                 return usersByRole
             } else {
-                return false
+                throw new Error("No existen usuarios");
             }
 
         } catch (error) {
@@ -112,7 +111,7 @@ export class UserService {
 
             const deletedUser: usersDB = await User.findByIdAndDelete(userId);
 
-            if (deletedUser) {
+            if (deletedUser !== null) {
                 return true
             } else {
                 return false
@@ -127,11 +126,11 @@ export class UserService {
         }
     }
 
-    public async update(userData: IUser): Promise<boolean> {
+    public async update(idUser: string, userData: IUser): Promise<boolean> {
         try {
-            const updatedUser: usersDB = await User.findByIdAndUpdate(userData);
+            const updatedUser: IUser | null = await User.findByIdAndUpdate(idUser, userData);
 
-            if (updatedUser) {
+            if (updatedUser !== null) {
                 return true
             } else {
                 return false
@@ -140,31 +139,6 @@ export class UserService {
         } catch (error) {
             if (error instanceof Error) {
                 throw new Error(`Error al actualizar el usuario: ${error.message}`);
-            } else {
-                throw new Error("Error desconocido");
-            }
-        }
-    }
-
-    public async login(userData: { user: string, password: string }): Promise<string | false> {
-        try {
-            const user: IUser | boolean = await this.findByNameEmail(userData);
-
-            if (typeof user !== "boolean") {
-                const validPassword: boolean = await verifyPassword(userData.password, user?.password)
-
-                if (validPassword) {
-                    return new JsonWebToken().generateToken(user)
-                } else {
-                    throw new Error("La contraseña no es valida");
-                }
-            } else {
-                return false
-            }
-
-        } catch (error) {
-            if (error instanceof Error) {
-                throw new Error(`Error al logearse : ${error.message}`);
             } else {
                 throw new Error("Error desconocido");
             }
