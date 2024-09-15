@@ -4,14 +4,14 @@ import { organizationsDB } from "../types/types";
 
 export class OrganizationServices {
 
-    public async find(): Promise<organizationsDB | boolean> {
+    public async findAll(): Promise<organizationsDB> {
         try {
             const organizations: organizationsDB = await Organization.find()
 
             if (organizations.length > 0) {
                 return organizations
             } else {
-                return false
+                throw new Error("No existen organizaciones");
             }
 
         } catch (error) {
@@ -23,14 +23,14 @@ export class OrganizationServices {
         }
     }
 
-    public async findOne(idOrganization: string): Promise<IOrganization | boolean> {
+    public async findById(idOrganization: string): Promise<IOrganization> {
         try {
             const organization: IOrganization | null = await Organization.findById(idOrganization)
 
             if (organization !== null) {
                 return organization
             } else {
-                return false
+                throw new Error("No existe la  organizacion");
             }
 
         } catch (error) {
@@ -42,11 +42,15 @@ export class OrganizationServices {
         }
     }
 
-    public async create(organizationData: IOrganization): Promise<IOrganization> {
+    public async create(organizationData: IOrganization): Promise<boolean> {
         try {
             const organization: IOrganization = await Organization.create(organizationData)
 
-            return organization
+            if (organization) {
+                return true
+            } else {
+                return false
+            }
 
         } catch (error) {
             if (error instanceof Error) {
@@ -57,20 +61,19 @@ export class OrganizationServices {
         }
     }
 
-    public async update(organizationData: IOrganization): Promise<IOrganization | boolean> {
+    public async update(idOrganization: string, organizationData: IOrganization): Promise<boolean> {
         try {
-            const organization: IOrganization | null = await Organization.findByIdAndUpdate(organizationData._id, organizationData)
+            const organization: IOrganization | null = await Organization.findByIdAndUpdate(idOrganization, organizationData)
 
             if (organization !== null) {
-
-                return organization
+                return true
             } else {
                 return false
             }
 
         } catch (error) {
             if (error instanceof Error) {
-                throw new Error(`Error al crear organizacion : ${error.message}`);
+                throw new Error(`Error al actualizar organizacion : ${error.message}`);
             } else {
                 throw new Error("Error desconocido");
             }
