@@ -11,7 +11,7 @@ const { getAll, getById, getByRole, setUser, updateUser, deleteUser } = new User
 
 router.get("/users", getAll)
 router.get("/user/:id", getById)
-router.get("/role", getByRole)
+router.get("/role/:id", getByRole)
 
 router.post("/user", validateCreateUser, setUser)
 

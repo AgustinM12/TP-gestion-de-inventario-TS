@@ -14,7 +14,14 @@ export const validateCreateUser = [
 
     check("password")
         .exists().withMessage("Debe escoger una contraseña")
-        .isStrongPassword().withMessage("La contraseña debe contener al menos una mayuscula, minuscula, numero, caracter especial y al menos 8 caracteres"),
+        .isLength({ min: 6 })
+        .withMessage('La contraseña debe tener al menos 6 caracteres')
+        .matches(/[a-zA-Z]/)
+        .withMessage('La contraseña debe contener al menos una letra')
+        .matches(/\d/)
+        .withMessage('La contraseña debe contener al menos un número')
+        .isAlphanumeric()
+        .withMessage('La contraseña debe ser alfanumérico'),
 
     check("role")
         .exists().withMessage("Debe escoger un rol")

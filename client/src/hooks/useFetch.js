@@ -1,6 +1,6 @@
-export const apiFetchFunction = async (route, method, payload) => {
+const useFetch = async (route, method, payload) => {
 
-    const url = `${"http://localhost:4000/api"}${route}`
+    let url = `${"http://localhost:4000/api"}${route}`
 
     const headers = {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export const apiFetchFunction = async (route, method, payload) => {
 
     } else if (method === "GET") {
         try {
-            const response = await fetch(url, {
+            const response = await fetch(url + payload, {
                 method: method,
                 headers: headers,
             })
@@ -44,3 +44,5 @@ export const apiFetchFunction = async (route, method, payload) => {
         }
     }
 }
+
+export default useFetch

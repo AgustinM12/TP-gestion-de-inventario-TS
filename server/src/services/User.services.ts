@@ -42,10 +42,12 @@ export class UserService {
         }
     }
 
-    public async findByRole(idRole: number): Promise<IUser[]> {
+    public async findByRole(idRole: string): Promise<IUser[]> {
         try {
+            console.log(idRole);
+
             // ! AGREGAR EL ID REAL DEL ROL
-            const usersByRole: IUser[] = await User.find({ role: idRole })
+            const usersByRole: IUser[] = await User.find({ role: idRole }).select('_id role name');
 
             if (usersByRole.length > 0) {
                 return usersByRole

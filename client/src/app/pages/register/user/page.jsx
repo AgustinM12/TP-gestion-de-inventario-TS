@@ -3,24 +3,24 @@
 import Link from "next/link";
 import useForm from "@/hooks/useForm";
 import useToggle from "@/hooks/useToggle";
+import useFetch from "@/hooks/useFetch"
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
 
 const register = () => {
+
+    
 
     const formValues = {
         name: "",
         email: "",
         dni: "",
         password: "",
+        role: ""
     }
 
     const { toggle: passInput, handleToggle: handlePassInput } = useToggle()
     const { values, errors, handleChange, handleSubmit } = useForm(formValues);
-
-    const onSubmit = async () => {
-
-    };
 
     const inputs = [
         {
@@ -56,12 +56,26 @@ const register = () => {
         },
     ]
 
+    const onSubmit = async () => {
+        const response = await useFetch("/user", "POST", values)
+
+        console.log(response);
+
+        if (response?.status !== "success") {
+            alert("ERROR", response?.errors)
+        } else {
+            alert("god")
+        }
+    };
+
+    console.log(values);
+
     return (
         <div className="flex justify-center items-center min  p-10">
 
             <div className={` border-slate-900 flex flex-col w-full max-w-md border-2 bg-gray-800 p-4 rounded-lg text-gray-200`}>
 
-                <p className="text-center text-2xl font-bold mb-1">Registro</p>
+                <p className="text-center text-2xl font-bold mb-1">Registro de usuarios</p>
                 <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
 
                     {/* //! NAME - LASTNAME */}
@@ -80,7 +94,7 @@ const register = () => {
 
                             {/* Si es el último elemento del array, muestra el botón */}
                             {key === inputs.length - 1 && (
-                                <div class="pt-2">
+                                <div className="pt-2">
                                     <button
                                         type="button"
                                         className="border p-2 rounded hover:bg-slate-300 transition-colors duration-300 hover:text-black w-fit"
@@ -92,6 +106,27 @@ const register = () => {
                             )}
                         </div>
                     ))}
+
+                    <div className="flex flex-col">
+                        <label className="text-gray-400 mb-1">Rol del usuario</label>
+
+                        <select
+                            name="role"
+                            id="role"
+                            className="bg-gray-700 border border-gray-600 rounded p-2 text-gray-200 focus:outline-none focus:ring focus:ring-blue-700"
+                            value={values.role}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="" disabled>
+                                roles
+                            </option>
+                            <option value="1">DELEGATE</option>
+                            <option value="2">MANAGER</option>
+                            <option value="3">MAINTENANCE</option>
+                        </select>
+                    </div>
+
 
                     <button
                         type="submit"

@@ -82,7 +82,7 @@ export default function Home() {
         </div>
 
         <p className="text-center text-sm text-gray-400 mt-4">¿Todavia no tienes una cuenta?
-          <Link href="/pages/register">
+          <Link href="/pages/register/user">
             <span className="hover:underline hover:text-blue-400 transition-colors duration-300 text-blue-800">  Registrate</span>
           </Link>
         </p>

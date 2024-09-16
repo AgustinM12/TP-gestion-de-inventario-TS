@@ -28,7 +28,7 @@ export class UserControllers {
         }
 
         return res.status(500).json({
-            message: "Ocurrió un error inesperado",
+            message: error.message || `Ocurrió un error inesperado.`,
             status: "error",
         });
     }
@@ -67,7 +67,8 @@ export class UserControllers {
 
     public getByRole = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const user: IUser[] | null = await new UserService().findByRole(req.body)
+            
+            const user: IUser[] | null = await new UserService().findByRole(req.params.id)
 
             if (user !== null) {
                 return this.handleResponse(res, user, 200)
