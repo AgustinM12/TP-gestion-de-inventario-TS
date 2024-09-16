@@ -1,5 +1,6 @@
 import { UserControllers } from "../controllers/User.controllers"
 import { Router } from "express";
+import { validateCreateUser } from "../validators/user.validation"
 // import {JsonWebToken} from "../helpers/jwt"
 
 // const {verifyToken} = new JsonWebToken()
@@ -12,7 +13,7 @@ router.get("/users", getAll)
 router.get("/user/:id", getById)
 router.get("/role", getByRole)
 
-router.post("/user", setUser)
+router.post("/user", validateCreateUser, setUser)
 
 router.put("/user/:id", updateUser)
 

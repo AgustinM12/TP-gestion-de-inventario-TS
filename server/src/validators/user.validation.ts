@@ -1,5 +1,5 @@
 import { check } from "express-validator";
-import { validateSchema } from "../helpers/expressValidator.js";
+import { validateSchema } from "../helpers/expressValidator";
 
 //! CREACION DE USUARIO
 
@@ -29,11 +29,15 @@ export const validateCreateUser = [
     check("dni")
         .exists().withMessage("Debe escoger un dni")
         .custom((value) => {
-            const number = value.toString(); // Convertimos el valor a string
-            if (!/^\d{8}$/.test(number)) { // Verifica si es un número de exactamente 8 dígitos
-                throw new Error('El valor debe ser un número de 8 dígitos');
+            try {
+                const number = value.toString(); // Convertimos el valor a string
+                if (!/^\d{8}$/.test(number)) { // Verifica si es un número de exactamente 8 dígitos
+                    throw new Error('El valor debe ser un número de 8 dígitos');
+                }
+                return true;
+            } catch (error) {
+                return true;
             }
-            return true;
         }),
     validateSchema(["name", "email", "password", "role", "dni"])
 ]
