@@ -58,4 +58,4 @@ DeviceSchema.path("updatedAt").get(function (value: Date) {
     return formatDate(value)
 })
 
-export const Device = model<IDevice>("organizations", DeviceSchema)
+export const Device = model<IDevice>("device", DeviceSchema)

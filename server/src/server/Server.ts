@@ -9,6 +9,8 @@ import { User } from "../models/User"
 import { DeviceState } from "../models/DeviceState"
 import { DeviceType } from "../models/DeviceType"
 import userRouter from "../routes/User.routes"
+import deviceRouter from "../routes/Device.routes"
+import organizationRouter from "../routes/Organization.routes"
 
 export class Server {
     private app: Application;
@@ -39,7 +41,9 @@ export class Server {
     }
 
     routes(): void {
-        this.app.use("/api", userRouter)
+        this.app.use("/api", userRouter);
+        this.app.use("/api", deviceRouter);
+        this.app.use("/api", organizationRouter);
     }
 
     listen(): void {
