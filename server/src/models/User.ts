@@ -8,6 +8,7 @@ export interface IUser extends Document {
     email: string;
     password: string;
     role: RoleEnum;
+    dni: number;
     // !opcionales
     createdAt?: string;
     updatedAt?: string;
@@ -22,7 +23,9 @@ const UserSchema = new Schema<IUser>({
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    role: { type: Number, ref: "roles", required: true, enum: RoleEnum }
+    role: { type: Number, ref: "roles", required: true, enum: RoleEnum },
+    dni: { type: Number, required: true },
+
 }, {
     timestamps: true,
     toJSON: { getters: true },  // Habilitar getters al convertir a JSON
@@ -77,7 +80,8 @@ UserSchema.statics.createDefaultAdmin = async function (): Promise<void> {
             name: "ADMIN",
             password: "0000",
             email: "adminEmail@gmail.com",
-            role: adminRole._id // * Asignar el ObjectId del rol ADMIN
+            role: adminRole._id, // * Asignar el ObjectId del rol ADMIN
+            dni: 44876123,
         });
         await admin.save();
         console.log("Usuario ADMIN creado por defecto");

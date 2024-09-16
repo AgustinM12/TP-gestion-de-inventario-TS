@@ -7,8 +7,8 @@ export interface IDevice extends Document {
     observationsRepair: object[],
     tradeMark: string,
     reparationCost: number,
-    type: ObjectId,
-    state: ObjectId,
+    type: number,
+    state: number,
     technician: ObjectId,
     organization: ObjectId,
     // !opcionales
@@ -19,27 +19,27 @@ export interface IDevice extends Document {
 const DeviceSchema = new Schema({
 
     name: { type: String, required: true },
-    details: { type: [String], require: true },
+    defectiveDetails: { type: [String], require: true },
+    observationsRepair: { type: Number, required: false },
     tradeMark: { type: String, required: true },
-    reparationCost: { type: Number, required: true },
+    reparationCost: { type: Number, required: false },
     type: {
-        type: Schema.Types.ObjectId,
-        ref: 'deviceTypes',
-        required: true
+        type: Number,
+        required: true,
     },
-    devices: [{
-        type: Schema.Types.ObjectId,
-        ref: 'devices',
-        required: true
+    state: [{
+        type: Number,
+        required: true,
+        default: 0
     }],
-    manager: {
+    technician: {
         type: Schema.Types.ObjectId,
         ref: 'users',
         required: true
     },
-    delegate: {
+    organization: {
         type: Schema.Types.ObjectId,
-        ref: 'users',
+        ref: 'organizations',
         required: true
     },
 
