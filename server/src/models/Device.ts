@@ -3,7 +3,8 @@ import { formatDate } from "../helpers/formatDates"
 
 export interface IDevice extends Document {
     name: string,
-    details: string[],
+    defectiveDetails: string[],
+    observationsRepair: object[],
     tradeMark: string,
     reparationCost: number,
     type: ObjectId,

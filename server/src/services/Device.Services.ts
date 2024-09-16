@@ -3,15 +3,15 @@ import { devicesDB } from "../types/types"
 
 export class DeviceService {
 
-    public async findOne(idDevice: string): Promise<IDevice | boolean> {
+    public async findById(idDevice: string): Promise<IDevice> {
         try {
 
             const device: IDevice | null = await Device.findById(idDevice)
 
-            if (device) {
+            if (device !== null) {
                 return device
             } else {
-                return false
+                throw new Error("No existe el dispositivo");
             }
 
         } catch (error) {
@@ -23,15 +23,15 @@ export class DeviceService {
         }
     }
 
-    public async findAll(): Promise<devicesDB | boolean> {
+    public async findAll(): Promise<devicesDB> {
         try {
 
             const devices: devicesDB = await Device.find()
 
-            if (devices) {
+            if (devices !== null) {
                 return devices
             } else {
-                return false
+                throw new Error("No existen dispositivos");
             }
 
         } catch (error) {
@@ -43,13 +43,13 @@ export class DeviceService {
         }
     }
 
-    public async create(deviceData: IDevice): Promise<IDevice | boolean> {
+    public async create(deviceData: IDevice): Promise<boolean> {
         try {
 
             const device: IDevice = await Device.create(deviceData)
 
             if (device) {
-                return device
+                return true
             } else {
                 return false
             }
@@ -63,10 +63,10 @@ export class DeviceService {
         }
     }
 
-    public async update(deviceData: IDevice): Promise<boolean> {
+    public async update(idDevice: string, deviceData: IDevice): Promise<boolean> {
         try {
 
-            const device: IDevice | null = await Device.findByIdAndUpdate(deviceData._id, deviceData)
+            const device: IDevice | null = await Device.findByIdAndUpdate(idDevice, deviceData)
 
             if (device !== null) {
                 return true

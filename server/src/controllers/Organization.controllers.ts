@@ -53,7 +53,7 @@ export class OrganizationControllers {
         }
     }
 
-    public updateUser = async (req: Request, res: Response): Promise<Response> => {
+    public updateOrganization = async (req: Request, res: Response): Promise<Response> => {
         try {
             const organization: boolean = await new OrganizationServices().update(req.params.id, req.body)
 
@@ -67,7 +67,7 @@ export class OrganizationControllers {
         }
     }
 
-    public deleteUser = async (req: Request, res: Response): Promise<Response> => {
+    public deleteOrganization = async (req: Request, res: Response): Promise<Response> => {
         try {
             const organization: boolean = await new OrganizationServices().delete(req.params.id)
 
