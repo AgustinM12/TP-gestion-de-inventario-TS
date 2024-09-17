@@ -86,6 +86,9 @@ export class UserControllers {
 
     public deleteUser = async (req: Request, res: Response): Promise<Response> => {
         try {
+            console.log(req.params.id);
+
+
             const user: boolean = await new UserService().delete(req.params.id)
 
             if (user !== false) {

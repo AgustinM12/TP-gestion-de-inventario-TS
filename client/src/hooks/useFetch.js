@@ -11,7 +11,7 @@ const useFetch = async (route, method, payload) => {
     // }
 
     //! SIN ARCHIVOS
-    if (method !== "GET") {
+    if (method === "POST") {
         try {
 
             const response = await fetch(url, {
@@ -28,7 +28,7 @@ const useFetch = async (route, method, payload) => {
             console.error("Error al realizar la petición", error);
         }
 
-    } else if (method === "GET") {
+    } else if (method === "GET" || method === "DELETE") {
         try {
             const response = await fetch(payload ? url + payload : url, {
                 method: method,

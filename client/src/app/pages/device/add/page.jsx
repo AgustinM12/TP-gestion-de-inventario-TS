@@ -1,13 +1,13 @@
 "use client"
-
-import Link from "next/link";
 import { Layout } from "@/components/layout/Layout";
 import useForm from "@/hooks/useForm";
 import useFetch from "@/hooks/useFetch"
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const addDevice = () => {
 
+    const router = useRouter()
     const [types, setTypes] = useState([])
     const [organizations, setOrganization] = useState([])
 
@@ -38,14 +38,15 @@ const addDevice = () => {
     const { values, errors, handleChange, handleSubmit } = useForm(formValues);
 
     const onSubmit = async () => {
-        const response = await useFetch("/organization", "POST", values)
+        const response = await useFetch("/device", "POST", values)
 
         console.log(response);
 
         if (response?.status !== "success") {
-            alert("ERROR", response?.errors)
+            alert(JSON.stringify(response?.errors))
         } else {
-            alert("god")
+            alert("Dispositivo añadido con exito")
+            router.push("/auth/device")
         }
     };
 
@@ -91,8 +92,6 @@ const addDevice = () => {
             id: "organization",
         },
     ]
-
-    console.log(values);
 
     return (
         <Layout>

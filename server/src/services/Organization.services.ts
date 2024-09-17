@@ -6,7 +6,7 @@ export class OrganizationServices {
 
     public async findAll(): Promise<organizationsDB> {
         try {
-            const organizations: organizationsDB = await Organization.find()
+            const organizations: organizationsDB = await Organization.find().populate("delegate", "name").populate("manager", "name")
 
             if (organizations.length > 0) {
                 return organizations

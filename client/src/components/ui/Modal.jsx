@@ -28,13 +28,13 @@ const Modal = ({ btnIcon, message, title, btnText, children, form, onSubmit, sub
             <div className="flex justify-center items-center min-h-scree">
                 <button
                     onClick={openModal}
-                    className={`${otherClass} group relative flex items-center justify-center gap-2 w-60 h-16 p-4 rounded-full border-none transition-all duration-450 ease-in-out transform bg-blue-900 text-white hover:bg-gradient-to-r hover:from-blue-900 hover:to-blue-950 hover:shadow-[inset_0px_1px_0px_rgba(255,255,255,0.4),inset_0px_-4px_0px_rgba(0,0,0,0.2),0px_0px_0px_4px_rgba(255,255,255,0.2),0px_0px_180px_0px_#9917FF] hover:-translate-y-0.5`}
+                    className={`${otherClass} group relative flex items-center justify-center p-1 rounded-md border-none transition-all duration-450 ease-in-out transform`}
                     title={tip}
                 >
                     <span className="relative z-10 transition-all duration-450 ease-in-out group-hover:text-white">
                         {btnText}
                     </span>
-                    <span className="relative z-10 transition-all duration-800 ease-in-out group-hover:fill-white group-hover:scale-120">
+                    <span className="relative z-10 transition-all duration-800 ease-in-out group-hover:fill-white group-hover:scale-120 text-2xl">
                         {btnIcon}
                     </span>
                 </button>

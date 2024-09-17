@@ -5,7 +5,7 @@ export class UserService {
 
     public async findAll(): Promise<usersDB> {
         try {
-            const users: usersDB = await User.find()
+            const users: usersDB = await User.find().select('_id role name email').populate('role', 'name');
 
             if (users.length > 0) {
                 return users

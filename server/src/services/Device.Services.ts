@@ -8,7 +8,7 @@ export class DeviceService {
     public async findById(idDevice: string): Promise<IDevice> {
         try {
 
-            const device: IDevice | null = await Device.findById(idDevice)
+            const device: IDevice | null = await Device.findById(idDevice).populate("type", "name").populate("organization", "name").populate("technician", "name")
 
             if (device !== null) {
                 return device
@@ -28,7 +28,7 @@ export class DeviceService {
     public async findAll(): Promise<devicesDB> {
         try {
 
-            const devices: devicesDB = await Device.find()
+            const devices: devicesDB = await Device.find().populate("type", "name").populate("organization", "name").populate("technician", "name")
 
             if (devices !== null) {
                 return devices

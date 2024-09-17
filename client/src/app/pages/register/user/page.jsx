@@ -1,13 +1,15 @@
 "use client"
 import { Layout } from "@/components/layout/Layout";
-import Link from "next/link";
 import useForm from "@/hooks/useForm";
 import useToggle from "@/hooks/useToggle";
 import useFetch from "@/hooks/useFetch"
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 const register = () => {
+
+    const router = useRouter()
 
     const formValues = {
         name: "",
@@ -60,9 +62,9 @@ const register = () => {
         console.log(response);
 
         if (response?.status !== "success") {
-            alert("ERROR", response?.errors)
+            alert(JSON.stringify(response?.errors))
         } else {
-            alert("god")
+            router.push("/auth/user")
         }
     };
 
