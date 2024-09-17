@@ -30,7 +30,7 @@ const useFetch = async (route, method, payload) => {
 
     } else if (method === "GET") {
         try {
-            const response = await fetch(url + payload, {
+            const response = await fetch(payload ? url + payload : url, {
                 method: method,
                 headers: headers,
             })

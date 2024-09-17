@@ -1,5 +1,7 @@
 import { Device, IDevice } from "../models/Device"
-import { devicesDB } from "../types/types"
+import { DeviceType } from "../models/DeviceType"
+import { DeviceState } from "../models/DeviceState"
+import { devicesDB, deviceTypesDB, deviceStatesDB } from "../types/types"
 
 export class DeviceService {
 
@@ -37,6 +39,46 @@ export class DeviceService {
         } catch (error) {
             if (error instanceof Error) {
                 throw new Error(`Error al buscar dispositivos : ${error.message}`);
+            } else {
+                throw new Error("Error desconocido");
+            }
+        }
+    }
+
+    public async findTypes(): Promise<deviceTypesDB> {
+        try {
+
+            const types: deviceTypesDB = await DeviceType.find()
+
+            if (types !== null) {
+                return types
+            } else {
+                throw new Error("No existen tipos de dispositivos");
+            }
+
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(`Error al buscar los tipos de dispositivos : ${error.message}`);
+            } else {
+                throw new Error("Error desconocido");
+            }
+        }
+    }
+
+    public async findStates(): Promise<deviceStatesDB> {
+        try {
+
+            const states: deviceStatesDB = await DeviceState.find()
+
+            if (states !== null) {
+                return states
+            } else {
+                throw new Error("No existen tipos de dispositivos");
+            }
+
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(`Error al buscar los tipos de dispositivos : ${error.message}`);
             } else {
                 throw new Error("Error desconocido");
             }

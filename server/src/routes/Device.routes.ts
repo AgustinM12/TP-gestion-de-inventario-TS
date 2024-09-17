@@ -6,10 +6,12 @@ import { DeviceControllers } from "../controllers/Device.controllers"
 
 const router = Router();
 
-const { getAll, getById, setDevice, updateDevice, deleteDevice } = new DeviceControllers()
+const { getAll, getById, setDevice, updateDevice, deleteDevice, getAllStates, getAllTypes } = new DeviceControllers()
 
 router.get("/devices", getAll)
 router.get("/device/:id", getById)
+router.get("/deviceTypes", getAllTypes)
+router.get("/deviceStates", getAllStates)
 
 router.post("/device", setDevice)
 

@@ -3,7 +3,7 @@ import { CustomError } from "../helpers/customError";
 import { ResponseHandler } from "../helpers/responseHandler"
 import { IDevice } from "../models/Device";
 import { DeviceService } from "../services/Device.Services";
-import { devicesDB } from "../types/types";
+import { devicesDB, deviceStatesDB, deviceTypesDB } from "../types/types";
 
 export class DeviceControllers {
 
@@ -13,6 +13,38 @@ export class DeviceControllers {
 
             if (devices !== null && devices?.length > 0) {
                 return ResponseHandler.handleResponse(res, devices, 200)
+
+            } else {
+                throw new CustomError("No se encontraron dispositivos", 404);
+            }
+
+        } catch (error) {
+            return ResponseHandler.handleError(error, res);
+        }
+    }
+
+    public getAllTypes = async (_req: Request, res: Response): Promise<Response> => {
+        try {
+            const types: deviceTypesDB = await new DeviceService().findTypes()
+
+            if (types !== null && types?.length > 0) {
+                return ResponseHandler.handleResponse(res, types, 200)
+
+            } else {
+                throw new CustomError("No se encontraron tipos de dispositivos", 404);
+            }
+
+        } catch (error) {
+            return ResponseHandler.handleError(error, res);
+        }
+    }
+
+    public getAllStates = async (_req: Request, res: Response): Promise<Response> => {
+        try {
+            const states: deviceStatesDB = await new DeviceService().findStates()
+
+            if (states !== null && states?.length > 0) {
+                return ResponseHandler.handleResponse(res, states, 200)
 
             } else {
                 throw new CustomError("No se encontraron dispositivos", 404);
