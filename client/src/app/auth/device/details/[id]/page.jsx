@@ -57,7 +57,7 @@ const page = ({ params }) => {
 
                                         {
                                             key === 0 &&
-                                            <h3 className="font-semibold border-b-2 w-full">Nombre del dispositivo</h3>
+                                            <h3 className="font-semibold border-b-2 w-full">Estado del dispositivo</h3>
                                         }
 
                                         <div className="flex space-x-2">
