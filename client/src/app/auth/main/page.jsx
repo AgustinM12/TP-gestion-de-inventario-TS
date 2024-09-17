@@ -1,12 +1,11 @@
-"use client"
 import { Layout } from "@/components/layout/Layout"
 
-const page = () => {
+const main = () => {
     return (
         <Layout>
-            <h1></h1>
+            <h1>sgahasdhafh</h1>
         </Layout>
     )
 }
 
-export default page
+export default main

@@ -24,7 +24,7 @@ export class ResponseHandler {
         }
 
         return res.status(500).json({
-            message: "Ocurrió un error inesperado",
+            message: "Ocurrió un error inesperado: " + error,
             status: "error",
         });
     }

@@ -64,7 +64,7 @@ export class UserService {
         }
     }
 
-    public async findByNameEmail(userData: { user: string }): Promise<boolean | IUser> {
+    public async findByNameEmail(userData: string): Promise<boolean | IUser> {
         try {
             // ! AGREGAR EL ID REAL DEL ROL
             const userAccount: IUser | null = await User.findOne({

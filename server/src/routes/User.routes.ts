@@ -1,5 +1,5 @@
-import { UserControllers } from "../controllers/User.controllers"
 import { Router } from "express";
+import { UserControllers } from "../controllers/User.controllers"
 import { validateCreateUser } from "../validators/user.validation"
 // import {JsonWebToken} from "../helpers/jwt"
 

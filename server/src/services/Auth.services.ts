@@ -7,7 +7,7 @@ export class AuthServices {
 
     public async login(userData: { user: string, password: string }): Promise<string | false> {
         try {
-            const user: IUser | boolean = await new UserService().findByNameEmail(userData);
+            const user: IUser | boolean = await new UserService().findByNameEmail(userData.user);
 
             if (typeof user !== "boolean") {
                 const validPassword: boolean = await verifyPassword(userData.password, user?.password)
@@ -30,5 +30,5 @@ export class AuthServices {
         }
     }
 
-    
+
 }

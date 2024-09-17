@@ -2,8 +2,10 @@
 import Link from "next/link";
 import useForm from "@/hooks/useForm"
 import useToggle from "@/hooks/useToggle";
+import useFetch from "@/hooks/useFetch";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
+import setTokenCookie from "@/utils/setToken";
 
 export default function Home() {
 
@@ -16,10 +18,14 @@ export default function Home() {
 
   const { values, errors, handleChange, handleSubmit } = useForm(formValues);
 
-  console.log(values);
+  const onSubmit = async () => {
+    const response = await useFetch("/login", "POST", values)
 
-  const onSubmit = () => {
-
+    if (response.status !== "success") {
+      alert(response.message)
+    } else {
+      setTokenCookie(response.data, 1)
+    }
   }
 
   return (
@@ -82,7 +88,7 @@ export default function Home() {
         </div>
 
         <p className="text-center text-sm text-gray-400 mt-4">¿Todavia no tienes una cuenta?
-          <Link href="/pages/register/user">
+          <Link href="/auth/register/user">
             <span className="hover:underline hover:text-blue-400 transition-colors duration-300 text-blue-800">  Registrate</span>
           </Link>
         </p>

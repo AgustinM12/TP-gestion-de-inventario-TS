@@ -35,7 +35,7 @@ const DeviceSchema = new Schema({
     technician: {
         type: Schema.Types.ObjectId,
         ref: 'users',
-        required: true
+        required: false
     },
     organization: {
         type: Schema.Types.ObjectId,

@@ -11,6 +11,7 @@ import { DeviceType } from "../models/DeviceType"
 import userRouter from "../routes/User.routes"
 import deviceRouter from "../routes/Device.routes"
 import organizationRouter from "../routes/Organization.routes"
+import authRouter from "../routes/Auth.routes"
 
 export class Server {
     private app: Application;
@@ -44,6 +45,7 @@ export class Server {
         this.app.use("/api", userRouter);
         this.app.use("/api", deviceRouter);
         this.app.use("/api", organizationRouter);
+        this.app.use("/api", authRouter);
     }
 
     listen(): void {

@@ -85,6 +85,26 @@ export class DeviceService {
         }
     }
 
+    public async findByState(idState: string): Promise<devicesDB> {
+        try {
+
+            const devices: devicesDB | null = await Device.find({ state: idState })
+
+            if (devices !== null) {
+                return devices
+            } else {
+                throw new Error("No existe el dispositivo");
+            }
+
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(`Error al buscar dispositivos : ${error.message}`);
+            } else {
+                throw new Error("Error desconocido");
+            }
+        }
+    }
+
     public async create(deviceData: IDevice): Promise<boolean> {
         try {
 

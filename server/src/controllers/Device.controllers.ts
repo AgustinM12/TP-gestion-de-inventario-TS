@@ -71,6 +71,38 @@ export class DeviceControllers {
         }
     }
 
+    public getByState = async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const devices: devicesDB = await new DeviceService().findByState(req.params.id)
+
+            if (devices !== null) {
+                return ResponseHandler.handleResponse(res, devices, 200)
+
+            } else {
+                throw new CustomError("No se encontro al dispositivo", 404);
+            }
+
+        } catch (error) {
+            return ResponseHandler.handleError(error, res);
+        }
+    }
+
+    // public getByType = async (req: Request, res: Response): Promise<Response> => {
+    //     try {
+    //         const device: IDevice | null = await new DeviceService().(req.params.id)
+
+    //         if (device !== null) {
+    //             return ResponseHandler.handleResponse(res, device, 200)
+
+    //         } else {
+    //             throw new CustomError("No se encontro al dispositivo", 404);
+    //         }
+
+    //     } catch (error) {
+    //         return ResponseHandler.handleError(error, res);
+    //     }
+    // }
+
     public setDevice = async (req: Request, res: Response): Promise<Response> => {
         try {
             const device: boolean = await new DeviceService().create(req.body)
