@@ -25,6 +25,7 @@ export default function Home() {
       alert(response.message)
     } else {
       setTokenCookie(response.data, 1)
+      window.location.reload()
     }
   }
 
@@ -81,14 +82,9 @@ export default function Home() {
           </button>
 
         </form>
-        <div className="flex items-center my-4">
-          <div className="flex-grow border-t border-gray-600"></div>
-          <p className="mx-2 text-sm text-gray-400">Inicia sesión con otras cuentas</p>
-          <div className="flex-grow border-t border-gray-600"></div>
-        </div>
 
         <p className="text-center text-sm text-gray-400 mt-4">¿Todavia no tienes una cuenta?
-          <Link href="/auth/register/user">
+          <Link href="/public/register">
             <span className="hover:underline hover:text-blue-400 transition-colors duration-300 text-blue-800">  Registrate</span>
           </Link>
         </p>

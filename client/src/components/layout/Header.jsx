@@ -1,7 +1,13 @@
 "use client"
 import Link from "next/link";
+import removeTokenCookie from "@/utils/removeToken";
 
 export const Header = () => {
+
+    const deleteCookie = () => {
+        removeTokenCookie("token")
+        window.location.reload()
+    };
 
     return (
         <header>
@@ -18,13 +24,17 @@ export const Header = () => {
                     </div>
 
                     {/* // * MODO OSCURO */}
-                    <div className='flex items-center'>
+                    <div className='flex items-center space-x-4'>
 
                         {/* // * AVATAR */}
                         <button onClick={() => nav("/profile")} title="Perfil">
                             <img
                                 className='h-6 w-6 rounded-full'
                                 src="https://ui-avatars.com/api?background=random&name=Agustin+Mazza" alt="Agustin Mazza" />
+                        </button>
+
+                        <button onClick={deleteCookie} className="border-2 border-white p-1 rounded-md hover:bg-slate-50 transition-all duration-300 hover:text-black">
+                            Cerrar Sesion
                         </button>
                     </div>
                 </section>
@@ -58,7 +68,7 @@ export const Header = () => {
                         </span>
                     </Link>
 
-                    <Link href="/auth/register/user" className="py-2">
+                    <Link href="/auth/user" className="py-2">
                         <span className="group relative before:absolute before:inset-x-0 before:bottom-0 before:h-2 before:origin-right before:scale-x-0 before:bg-indigo-700 before:transition before:duration-200 hover:before:origin-left hover:before:scale-x-100  px-3">
 
                             <span className="relative text-white group-hover:text-border font-semibold">Users</span>

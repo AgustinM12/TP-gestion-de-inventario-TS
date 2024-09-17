@@ -4,18 +4,17 @@ import { NextResponse } from 'next/server';
 export function middleware(request) {
     // Accede a las cookies desde la petición
     const token = request.cookies.get('token');
-    const url = request.url;
 
-    // Si hay token y la ruta es '/'
-    if (token && url.endsWith('/')) {
-        // Redirige al usuario a '/auth/main'
-        return NextResponse.redirect(new URL('/auth/main', url));
+    const url = new URL(request.url);
+
+    // Si el token no existe y el usuario está intentando acceder a una ruta protegida, redirige al '/'
+    if (!token && url.pathname.startsWith('/auth')) {
+        return NextResponse.redirect(new URL('/', request.url));
     }
 
-    // Si no hay token y la ruta es '/auth' o alguna subruta de '/auth'
-    if (!token && url.startsWith('/auth')) {
-        // Redirige al usuario a '/'
-        return NextResponse.redirect(new URL('/', url));
+    // Si el token existe y el usuario está intentando acceder a '/', redirige a la ruta de autenticación
+    if (token && url.pathname === '/') {
+        return NextResponse.redirect(new URL('/auth/main', request.url));
     }
 
     // Permite continuar con la petición
@@ -23,5 +22,5 @@ export function middleware(request) {
 }
 
 export const config = {
-    matcher: ['/auth/:path*', '/'], // Aplica el middleware a las rutas bajo /auth y la ruta '/'
+    matcher: ['/auth/:path*', '/'], // Aplica el middleware a todas las rutas bajo /auth y a '/'
 };

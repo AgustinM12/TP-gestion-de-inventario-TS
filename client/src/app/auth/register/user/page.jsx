@@ -136,11 +136,6 @@ const register = () => {
 
                     </form>
 
-                    <p className="text-center text-sm text-gray-400 mt-4">¿Ya tienes una cuenta?
-                        <Link href="/">
-                            <span className="hover:underline hover:text-blue-400 text-blue-800 transition-colors duration-300"> Iniciar sesión</span>
-                        </Link>
-                    </p>
                 </div>
             </div >
         </Layout>
