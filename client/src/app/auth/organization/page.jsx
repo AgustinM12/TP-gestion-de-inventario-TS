@@ -12,7 +12,10 @@ import getCookie from "@/utils/getToken"
 const page = () => {
 
     const role = getCookie('role')
+    const id = getCookie('id')
 
+    console.log(role);
+    
     const router = useRouter()
 
     const [organizations, setOrganizations] = useState([])
@@ -20,16 +23,11 @@ const page = () => {
     useEffect(() => {
 
         const fetchData = async () => {
+            const response = await useFetch(role != 2 ? "/organizations" : "/organizationUser/", "GET", role == 2 ? id : "");
 
-            if (role == 2) {
-
-                const response = await useFetch(role == 2 ? ("/organizations", "GET") : ("/organization", "GET", 12))
-
-                if (response.data) {
-                    setOrganizations(response.data)
-                }
+            if (response?.data) {
+                setOrganizations(response?.data)
             }
-
         }
 
         fetchData()

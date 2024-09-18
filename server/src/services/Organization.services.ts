@@ -42,6 +42,25 @@ export class OrganizationServices {
         }
     }
 
+    public async findByUser(idUser: string): Promise<IOrganization> {
+        try {
+            const organization: IOrganization | null = await Organization.findOne({ manager: idUser })
+
+            if (organization !== null) {
+                return organization
+            } else {
+                throw new Error("No existe la  organizacion");
+            }
+
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(`Error al buscar organizacion: ${error.message}`);
+            } else {
+                throw new Error("Error desconocido");
+            }
+        }
+    }
+
     public async create(organizationData: IOrganization): Promise<boolean> {
         try {
             const organization: IOrganization = await Organization.create(organizationData)

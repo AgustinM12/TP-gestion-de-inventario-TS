@@ -39,6 +39,22 @@ export class OrganizationControllers {
         }
     }
 
+    public getByUser = async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const organization: IOrganization | null = await new OrganizationServices().findByUser(req.params.id)
+
+            if (organization !== null) {
+                return ResponseHandler.handleResponse(res, organization, 200)
+
+            } else {
+                throw new CustomError("No se encontro la organizacion", 404);
+            }
+
+        } catch (error) {
+            return ResponseHandler.handleError(error, res);
+        }
+    }
+
     public setOrganization = async (req: Request, res: Response): Promise<Response> => {
         try {
             const organization: boolean = await new OrganizationServices().create(req.body)
