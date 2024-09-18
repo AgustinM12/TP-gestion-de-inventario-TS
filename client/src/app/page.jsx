@@ -5,9 +5,11 @@ import useToggle from "@/hooks/useToggle";
 import useFetch from "@/hooks/useFetch";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
-import setTokenCookie from "@/utils/setToken";
+import setCookie from "@/utils/setToken";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter()
 
   const { toggle, handleToggle } = useToggle(false)
 
@@ -24,8 +26,11 @@ export default function Home() {
     if (response.status !== "success") {
       alert(response.message)
     } else {
-      setTokenCookie(response.data, 1)
-      window.location.reload()
+      setCookie("token", response.data.token, 1)
+      setCookie("name", response.data.name, 1)
+      setCookie("role", response.data.role, 1)
+      setCookie("id", response.data.id, 1)
+      router.refresh()
     }
   }
 

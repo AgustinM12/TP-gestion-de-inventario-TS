@@ -2,7 +2,7 @@ import { Router } from "express";
 import { OrganizationControllers } from "../controllers/Organization.controllers"
 import { JsonWebToken } from "../helpers/jwt"
 
-const { verifyToken } = new JsonWebToken()
+const { verifyToken, verifyManagerOrManager } = new JsonWebToken()
 
 const router = Router();
 
@@ -11,7 +11,7 @@ const { getAll, getById, setOrganization, updateOrganization, deleteOrganization
 router.get("/organizations", verifyToken, getAll)
 router.get("/organization/:id", verifyToken, getById)
 
-router.post("/organization", verifyToken, setOrganization)
+router.post("/organization", verifyToken, verifyManagerOrManager, setOrganization)
 
 router.put("/organization/:id", verifyToken, updateOrganization)
 

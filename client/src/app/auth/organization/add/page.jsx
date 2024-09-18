@@ -4,8 +4,11 @@ import useForm from "@/hooks/useForm";
 import useFetch from "@/hooks/useFetch"
 import { useEffect, useState } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { useRouter } from "next/navigation";
 
 const register = () => {
+
+    const router = useRouter()
 
     const [users, setUsers] = useState([])
 
@@ -24,8 +27,6 @@ const register = () => {
         fetchUsers()
     }, [])
 
-    console.log(users);
-
     const formValues = {
         name: "",
         location: "",
@@ -41,9 +42,10 @@ const register = () => {
         console.log(response);
 
         if (response?.status !== "success") {
-            alert("ERROR", response?.errors)
+            alert(JSON.stringify(response?.errors) || JSON.stringify(response?.message))
         } else {
-            alert("god")
+            alert("Organizacion registrada con exito")
+            router.back()
         }
     };
 
@@ -82,9 +84,10 @@ const register = () => {
         },
     ]
 
+    console.log(users);
+
     return (
         <Layout>
-
 
             <div className="flex justify-center items-center min p-10">
 

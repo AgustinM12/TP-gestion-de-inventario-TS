@@ -7,8 +7,11 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Modal from "@/components/ui/Modal"
 import { MdDeleteForever } from "react-icons/md"
+import getCookie from "@/utils/getToken"
 
 const page = () => {
+
+    const role = getCookie('role')
 
     const router = useRouter()
 
@@ -17,11 +20,16 @@ const page = () => {
     useEffect(() => {
 
         const fetchData = async () => {
-            const response = await useFetch("/organizations", "GET")
 
-            if (response.data) {
-                setOrganizations(response.data)
+            if (role == 2) {
+
+                const response = await useFetch(role == 2 ? ("/organizations", "GET") : ("/organization", "GET", 12))
+
+                if (response.data) {
+                    setOrganizations(response.data)
+                }
             }
+
         }
 
         fetchData()

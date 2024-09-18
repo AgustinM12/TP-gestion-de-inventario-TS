@@ -8,7 +8,6 @@ interface IToken {
     name: string,
     email: string,
     role: number,
-
 }
 
 interface AuthenticatedRequest extends Request {
@@ -62,24 +61,41 @@ export class JsonWebToken {
         }
     }
 
-    verifyAdminOrSeller(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    verifyLocalUsers(req: AuthenticatedRequest, res: Response, next: NextFunction) {
 
         const { role } = req.user;
 
-        // ! Verificar si el rol es "ADMIN" o "SELLER"
-        if (role === "ADMIN" || role === "SELLER") {
+        if (role === 0 || role === 3 || role === 1) {
             next(); // Permitir el acceso
         } else {
-            return res.status(403).json({ message: 'Acceso denegado. Requiere rol de ADMIN o SELLER.' });
+            return res.status(403).json({ message: 'Acceso denegado. Requiere rol de ADMIN, MAINTENANCE o DELEGATE' });
         }
     };
 
     verifyAdmin(req: AuthenticatedRequest, res: Response, next: NextFunction) {
 
         const { role } = req.user;
+        if (role === 0) {
+            next(); // Permitir el acceso
+        } else {
+            return res.status(403).json({ message: 'Acceso denegado. Requiere rol de ADMIN.' });
+        }
+    };
 
-        // ! Verificar si el rol es "ADMIN" o "SELLER"
-        if (role === "ADMIN") {
+    verifyManager(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+
+        const { role } = req.user;
+        if (role === 2) {
+            next(); // Permitir el acceso
+        } else {
+            return res.status(403).json({ message: 'Acceso denegado. Requiere rol de ADMIN.' });
+        }
+    };
+
+    verifyManagerOrManager(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+
+        const { role } = req.user;
+        if (role === 2 || role === 0) {
             next(); // Permitir el acceso
         } else {
             return res.status(403).json({ message: 'Acceso denegado. Requiere rol de ADMIN.' });

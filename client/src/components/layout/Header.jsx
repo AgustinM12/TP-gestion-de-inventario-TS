@@ -1,12 +1,21 @@
 "use client"
 import Link from "next/link";
-import removeTokenCookie from "@/utils/removeToken";
+import removeCookie from "@/utils/removeToken";
+import getCookie from "@/utils/getToken"
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
 
+    const router = useRouter()
+    const userName = getCookie("name")
+    const role = getCookie("role")
+
     const deleteCookie = () => {
-        removeTokenCookie("token")
-        window.location.reload()
+        removeCookie("token")
+        removeCookie("name")
+        removeCookie("role")
+        removeCookie("id")
+        router.refresh()
     };
 
     return (
@@ -27,11 +36,14 @@ export const Header = () => {
                     <div className='flex items-center space-x-4'>
 
                         {/* // * AVATAR */}
-                        <button onClick={() => nav("/profile")} title="Perfil">
+                        <button onClick={() => router.push("auth/profile")} title={"Perfil de " + userName}>
                             <img
                                 className='h-6 w-6 rounded-full'
-                                src="https://ui-avatars.com/api?background=random&name=Agustin+Mazza" alt="Agustin Mazza" />
+                                src={`https://ui-avatars.com/api?background=random&name=${userName}`} alt={userName}
+                            />
                         </button>
+
+                        <h2 className="font-semibold text-md">{role == 0 ? "ADMIN" : role == 1 ? "DELEGATE" : role == 2 ? "MANAGER" : "MAINTENANCE"}</h2>
 
                         <button onClick={deleteCookie} className="border-2 border-white p-1 rounded-md hover:bg-slate-50 transition-all duration-300 hover:text-black">
                             Cerrar Sesion
@@ -42,39 +54,42 @@ export const Header = () => {
             {/* LINKS */}
             <section className={`bg-cyan-700 text-start py-1 pb-1 border-t transition duration-300 "translate-x-0" md:translate-x-0 md:duration-0 w-full z-40 static md:static`}>
 
-                <ul className="grid-cols-4 grid-rows-1 grid text-center">
+                <ul className="flex flex-row justify-around text-center">
 
                     <Link href="/auth/main" className="py-2">
-                        <span className="group relative before:absolute before:inset-x-0 before:bottom-0 before:h-2 before:origin-right before:scale-x-0 before:bg-indigo-700 before:transition before:duration-200 hover:before:origin-left hover:before:scale-x-100  px-3">
+                        <span className="group relative before:absolute before:inset-x-0 before:bottom-0 before:h-2 before:origin-right before:scale-x-0 before:bg-blue-300 before:transition before:duration-200 hover:before:origin-left hover:before:scale-x-100  px-3">
 
-                            <span className="relative text-white group-hover:text-border font-semibold">Home</span>
+                            <span className="relative text-border text-white group-hover:text-border font-semibold">Home</span>
 
                         </span>
                     </Link>
 
                     <Link href="/auth/device" className="py-2">
-                        <span className="group relative before:absolute before:inset-x-0 before:bottom-0 before:h-2 before:origin-right before:scale-x-0 before:bg-indigo-700 before:transition before:duration-200 hover:before:origin-left hover:before:scale-x-100  px-3">
+                        <span className="group relative before:absolute before:inset-x-0 before:bottom-0 before:h-2 before:origin-right before:scale-x-0 before:bg-blue-300 before:transition before:duration-200 hover:before:origin-left hover:before:scale-x-100  px-3">
 
-                            <span className="relative text-white group-hover:text-border font-semibold">Devices</span>
+                            <span className="relative text-border text-white group-hover:text-border font-semibold">Devices</span>
 
                         </span>
                     </Link>
 
                     <Link href="/auth/organization" className="py-2">
-                        <span className="group relative before:absolute before:inset-x-0 before:bottom-0 before:h-2 before:origin-right before:scale-x-0 before:bg-indigo-700 before:transition before:duration-200 hover:before:origin-left hover:before:scale-x-100  px-3">
+                        <span className="group relative before:absolute before:inset-x-0 before:bottom-0 before:h-2 before:origin-right before:scale-x-0 before:bg-blue-300 before:transition before:duration-200 hover:before:origin-left hover:before:scale-x-100  px-3">
 
-                            <span className="relative text-white group-hover:text-border font-semibold">Organizations</span>
-
-                        </span>
-                    </Link>
-
-                    <Link href="/auth/user" className="py-2">
-                        <span className="group relative before:absolute before:inset-x-0 before:bottom-0 before:h-2 before:origin-right before:scale-x-0 before:bg-indigo-700 before:transition before:duration-200 hover:before:origin-left hover:before:scale-x-100  px-3">
-
-                            <span className="relative text-white group-hover:text-border font-semibold">Users</span>
+                            <span className="relative text-border text-white group-hover:text-border font-semibold">Organizations</span>
 
                         </span>
                     </Link>
+
+                    {role != 2 &&
+                        <Link href="/auth/user" className="py-2">
+                            <span className="group relative before:absolute before:inset-x-0 before:bottom-0 before:h-2 before:origin-right before:scale-x-0 before:bg-blue-300 before:transition before:duration-200 hover:before:origin-left hover:before:scale-x-100  px-3">
+
+                                <span className="relative text-border text-white group-hover:text-border font-semibold">Users</span>
+
+                            </span>
+                        </Link>
+                    }
+
                 </ul>
 
             </section>

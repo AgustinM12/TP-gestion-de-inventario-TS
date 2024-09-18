@@ -5,7 +5,7 @@ import { JsonWebToken } from "../helpers/jwt";
 
 export class AuthServices {
 
-    public async login(userData: { user: string, password: string }): Promise<string | false> {
+    public async login(userData: { user: string, password: string }): Promise<{ token: string, role: number, name: string, id: any } | false> {
         try {
             const user: IUser | boolean = await new UserService().findByNameEmail(userData.user);
 
@@ -13,7 +13,8 @@ export class AuthServices {
                 const validPassword: boolean = await verifyPassword(userData.password, user?.password)
 
                 if (validPassword) {
-                    return new JsonWebToken().generateToken(user)
+                    const token = new JsonWebToken().generateToken(user)
+                    return { token, role: user.role, name: user.name, id: user._id }
                 } else {
                     throw new Error("La contraseña no es valida");
                 }

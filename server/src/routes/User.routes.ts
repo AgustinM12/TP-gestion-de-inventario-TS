@@ -13,7 +13,7 @@ router.get("/users", verifyToken, getAll)
 router.get("/user/:id", verifyToken, getById)
 router.get("/role/:id", verifyToken, getByRole)
 
-router.post("/user", verifyToken, validateCreateUser, setUser)
+router.post("/user", validateCreateUser, setUser)
 
 router.put("/user/:id", verifyToken, updateUser)
 
