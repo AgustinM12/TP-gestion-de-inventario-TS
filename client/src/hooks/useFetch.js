@@ -42,6 +42,23 @@ const useFetch = async (route, method, payload) => {
         } catch (error) {
             console.error("Error al realizar la petición");
         }
+    } else if (method === "PUT") {
+        try {
+            console.log(url);
+
+            const response = await fetch(url, {
+                method: method,
+                headers: headers,
+                body: JSON.stringify(payload),
+            })
+
+            const data = await response.json()
+
+            return data
+
+        } catch (error) {
+            console.error("Error al realizar la petición", error);
+        }
     }
 }
 

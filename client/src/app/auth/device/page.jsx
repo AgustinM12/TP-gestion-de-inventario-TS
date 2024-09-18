@@ -53,7 +53,7 @@ const page = () => {
             <div className="py-5 px-10">
 
                 <div className="border-2 rounded-md">
-                    <h2>Organizaciones registrados</h2>
+                    <h2>Dispositivos registrados</h2>
                     {
                         devices.length > 0 &&
 
@@ -80,7 +80,7 @@ const page = () => {
                                                     </button>
                                                 </Link >
 
-                                                <Link href={"/auth/device/edit"}>
+                                                <Link href={"/auth/device/edit/" + item._id}>
                                                     <button className="p-2 rounded-md bg-yellow-400" title="Actualizar detalles">
                                                         <i className="text-white"><FaEdit /></i>
                                                     </button>

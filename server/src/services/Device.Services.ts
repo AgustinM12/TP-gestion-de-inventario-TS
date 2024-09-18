@@ -8,7 +8,7 @@ export class DeviceService {
     public async findById(idDevice: string): Promise<IDevice> {
         try {
 
-            const device: IDevice | null = await Device.findById(idDevice).populate("type", "name").populate("organization", "name").populate("technician", "name")
+            const device: IDevice | null = await Device.findById(idDevice).populate("type", "name").populate("organization", "name").populate("technician", "name").populate("state", "name")
 
             if (device !== null) {
                 return device

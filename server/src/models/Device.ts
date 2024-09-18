@@ -6,7 +6,7 @@ import { DeviceStateEnum } from "../models/DeviceState"
 export interface IDevice extends Document {
     name: string,
     defectiveDetails: string[],
-    observationsRepair: object[],
+    observationsRepair: string[],
     tradeMark: string,
     reparationCost: number,
     type: number,
@@ -22,7 +22,7 @@ const DeviceSchema = new Schema({
 
     name: { type: String, required: true },
     defectiveDetails: { type: [String], require: true },
-    observationsRepair: { type: Number, required: false, default: null },
+    observationsRepair: { type: [String], required: false, default: null },
     tradeMark: { type: String, required: true },
     reparationCost: { type: Number, required: false, default: null },
     type: {
