@@ -44,6 +44,9 @@ export class JsonWebToken {
             // * Obtener el token de los headers de la solicitud
             const token = req.headers['authorization'];
 
+            console.log(req.headers['authorization']);
+
+
             if (!token) {
                 return res.status(401).json({ message: 'Acceso denegado. No hay token proporcionado.' });
             }

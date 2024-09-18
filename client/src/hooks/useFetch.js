@@ -2,13 +2,28 @@ const useFetch = async (route, method, payload) => {
 
     let url = `${"http://localhost:4000/api"}${route}`
 
-    const headers = {
+    let headers = {
         "Content-Type": "application/json",
     };
 
-    // if (url.includes("/auth/") || url.includes("/api/")) {
-    //     headers["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
-    // }
+    function getCookie(name) {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            // Elimina los espacios y comprueba si el nombre coincide
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                return cookie.substring(name.length + 1);
+            }
+        }
+        return null; // Retorna null si no se encuentra la cookie
+    }
+
+    if (url.includes("/api/")) {
+        const token = getCookie('token');
+        if (token) {
+            headers["Authorization"] = token;
+        }
+    }
 
     //! SIN ARCHIVOS
     if (method === "POST") {

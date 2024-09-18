@@ -44,6 +44,9 @@ const editDevice = ({ params }) => {
             const types = await useFetch("/types", "GET")
             const organizations = await useFetch("/organizations", "GET")
 
+            console.log(device);
+
+
             if (device?.data) {
                 setDevice([device?.data])
             }
@@ -62,19 +65,19 @@ const editDevice = ({ params }) => {
 
             if (organizations?.data) {
                 setOrganization(organizations?.data)
-            }
+            }            
 
             setValues(prevValues => ({
                 ...prevValues,
-                name: device.data.name || [],
-                tradeMark: device.data.tradeMark,
-                defectiveDetails: device.data.defectiveDetails,
-                observationsRepair: device.data.observationsRepair,
-                state: device.data.state,
-                reparationCost: device.data.reparationCost,
-                type: device.data.type,
-                technician: device.data.technician,
-                organization: device.data.organization
+                name: device.data.name || "",
+                tradeMark: device.data.tradeMark || "",
+                defectiveDetails: device.data.defectiveDetails || [],
+                observationsRepair: device.data.observationsRepair || [],
+                state: device.data.state.id || "",
+                reparationCost: device.data.reparationCost || "",
+                type: device.data.type._id || "",
+                technician: device.data.technician?._id || "",
+                organization: device.data.organization._id || ""
             }));
         }
         fetchDevices()
@@ -84,12 +87,12 @@ const editDevice = ({ params }) => {
 
         console.log("intente");
 
-        // const res = await useFetch("/device/" + id, "PUT", values)
+        const res = await useFetch("/device/" + id, "PUT", values)
 
-        // if (res.status !== "success") {
-        //     alert(JSON.stringify(res))
-        // }
-        // router.push("/auth/device/details/" + id)
+        if (res.status !== "success") {
+            alert(JSON.stringify(res))
+        }
+        router.push("/auth/device/details/" + id)
     }
 
     console.log(values);

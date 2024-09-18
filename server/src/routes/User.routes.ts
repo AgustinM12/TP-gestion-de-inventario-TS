@@ -1,22 +1,22 @@
 import { Router } from "express";
 import { UserControllers } from "../controllers/User.controllers"
 import { validateCreateUser } from "../validators/user.validation"
-// import {JsonWebToken} from "../helpers/jwt"
+import { JsonWebToken } from "../helpers/jwt"
 
-// const {verifyToken} = new JsonWebToken()
+const { verifyToken } = new JsonWebToken()
 
 const router = Router();
 
 const { getAll, getById, getByRole, setUser, updateUser, deleteUser } = new UserControllers()
 
-router.get("/users", getAll)
-router.get("/user/:id", getById)
-router.get("/role/:id", getByRole)
+router.get("/users", verifyToken, getAll)
+router.get("/user/:id", verifyToken, getById)
+router.get("/role/:id", verifyToken, getByRole)
 
-router.post("/user", validateCreateUser, setUser)
+router.post("/user", verifyToken, validateCreateUser, setUser)
 
-router.put("/user/:id", updateUser)
+router.put("/user/:id", verifyToken, updateUser)
 
-router.delete("/user/:id", deleteUser)
+router.delete("/user/:id", verifyToken, deleteUser)
 
 export default router
